@@ -43,7 +43,7 @@ class Example(Base):
         vao_ref = GL.glGenVertexArrays(1)
         GL.glBindVertexArray(vao_ref)
         ### Set up vertex attribute: three points of triangle ###
-        position_data = my_obj_reader("./projetos/P6/p6-3/core/letra.obj")
+        position_data = my_obj_reader("./p6-3/core/letra.obj")
         self.vertex_count = len(position_data)
         position_attribute = Attribute('vec3', position_data)
         position_attribute.associate_variable(self.program_ref, 'position')
