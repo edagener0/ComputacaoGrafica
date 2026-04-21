@@ -113,7 +113,6 @@ class Example(Base):
 
         # aumentar o ângulo ao longo do tempo
         self.angle += 0.5 * self.delta_time
-
         radius = 6  # distância aos objetos
 
         x = radius * math.sin(self.angle)

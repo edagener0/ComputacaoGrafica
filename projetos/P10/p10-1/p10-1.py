@@ -22,7 +22,6 @@ from light.point import PointLight
 from material.flat import FlatMaterial
 from material.lambert import LambertMaterial
 from material.phong import PhongMaterial
-from material.texture import TextureMaterial
 
 class Example(Base):
     """
