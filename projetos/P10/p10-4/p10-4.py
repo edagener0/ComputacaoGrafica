@@ -103,7 +103,7 @@ class Example(Base):
     def update(self):
         self.rig.update(self.input, self.delta_time)
         self.directional_light.set_direction([-1, math.sin(0.5 * self.time), 0])
-        self.directional_light2.set_direction([-1, math.sin(0.5 * self.time), 0])
+        self.directional_light2.set_direction([1, math.sin(0.5 * self.time), 0])
         self.point_light.set_position([1, math.sin(self.time), 1])
         self.renderer.render(self.scene, self.camera)
 
