@@ -28,21 +28,33 @@ class Uniform:
         self._variable_ref = GL.glGetUniformLocation(program_ref, variable_name)
 
     def upload_data(self):
-        """ Store data in uniform variable previously located """
-        # If the program does not reference the variable, then exit
         if self._variable_ref != -1:
             if self._data_type == 'int':
                 GL.glUniform1i(self._variable_ref, self._data)
+
             elif self._data_type == 'bool':
                 GL.glUniform1i(self._variable_ref, self._data)
+
             elif self._data_type == 'float':
                 GL.glUniform1f(self._variable_ref, self._data)
+
             elif self._data_type == 'vec2':
                 GL.glUniform2f(self._variable_ref, self._data[0], self._data[1])
+
             elif self._data_type == 'vec3':
                 GL.glUniform3f(self._variable_ref, self._data[0], self._data[1], self._data[2])
+
             elif self._data_type == 'vec4':
                 GL.glUniform4f(self._variable_ref, self._data[0], self._data[1], self._data[2], self._data[3])
+
             elif self._data_type == 'mat4':
                 GL.glUniformMatrix4fv(self._variable_ref, 1, GL.GL_TRUE, self._data)
-           
+
+            elif self._data_type == 'sampler2D':
+                texture_ref, unit = self._data
+
+                GL.glActiveTexture(GL.GL_TEXTURE0 + unit)
+                GL.glBindTexture(GL.GL_TEXTURE_2D, texture_ref)
+
+                GL.glUniform1i(self._variable_ref, unit)
+            

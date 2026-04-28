@@ -50,16 +50,14 @@ class TauGeometry(Geometry):
             p2b, p3b, p5b,  p2b, p5b, p4b,
         ]
 
-        uv_pattern = [
-            [0, 0],
-            [1, 0],
-            [0.5, 1]
-        ]
-
         uv_data = []
-
         for i in range(len(position_data)):
-            uv_data.append(uv_pattern[i % 3])
+            if i % 3 == 0:
+                uv_data.append([0, 0])
+            elif i % 3 == 1:
+                uv_data.append([1, 0])
+            else:
+                uv_data.append([0.5, 1])
 
         
         color_data = []
