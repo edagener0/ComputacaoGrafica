@@ -61,12 +61,15 @@ class Example(Base):
         
         tex1 = Texture(file_name="./images/rgb-noise.jpg")
         tex2 = Texture(file_name="./images/crate.jpg")
+        tex3 = Texture(file_name="./images/grid.jpg")
+        tex4 = Texture(file_name="./images/rgb-noise.jpg")
 
         material = TextureMaterial(texture1=tex1, texture2=tex2)
+        material2 = TextureMaterial(texture1=tex3, texture2=tex4)
         material.uniform_dict["repeatUV"].data = [4.0, 4.0]
 
         
-        def create_letter(path):
+        def create_letter(path, material):
             position_data = my_obj_reader(path)
             geometry = Geometry()
 
@@ -106,22 +109,40 @@ class Example(Base):
             return Mesh(geometry, material)
 
         
-        self.mesh1 = create_letter("./core/letra.obj")
-        self.mesh2 = create_letter("./core/letra_david.obj")
+        self.mesh1 = create_letter("./core/letra.obj", material)
+        self.mesh2 = create_letter("./core/letra_david.obj", material2)
 
         
-        self.mesh1.set_position([-1.5, 0, 0])
-        self.mesh2.set_position([1.5, 0, 0])
+        self.mesh1.set_position([-1.5, 0.85, 0])
+        self.mesh2.set_position([1.5, 0.85, 0])
 
         
         self.group.add(self.mesh1)
         self.group.add(self.mesh2)
 
         self.rot_speed = [0.0, 0.0, 0.0]
+        self.rot_speed2 = [0.0, 0.0, 0.0]
 
 
     def update(self):
         step = 0.005
+        if self.input.is_key_pressed("i"):
+            self.rot_speed2[0] += step
+
+        if self.input.is_key_pressed("o"):
+            self.rot_speed2[1] += step
+
+        if self.input.is_key_pressed("p"):
+            self.rot_speed2[2] += step
+
+        if self.input.is_key_pressed("I"):
+            self.rot_speed2[0] -= step
+
+        if self.input.is_key_pressed("O"):
+            self.rot_speed2[1] -= step
+
+        if self.input.is_key_pressed("P"):
+            self.rot_speed2[2] -= step
 
         if self.input.is_key_pressed("x"):
             self.rot_speed[0] += step
@@ -146,20 +167,26 @@ class Example(Base):
 
         if self.input.is_key_down("space"):
             self.rot_speed = [0.0, 0.0, 0.0]
+            self.rot_speed2 = [0.0, 0.0, 0.0]
 
         if self.input.is_key_down("r"):
             self.rot_speed[0] *= -1
             self.rot_speed[1] *= -1
             self.rot_speed[2] *= -1
+        
+        if self.input.is_key_down("R"):
+            self.rot_speed2[0] *= -1
+            self.rot_speed2[1] *= -1
+            self.rot_speed2[2] *= -1
 
         
         self.mesh1.rotate_x(self.rot_speed[0])
         self.mesh1.rotate_y(self.rot_speed[1])
         self.mesh1.rotate_z(self.rot_speed[2])
 
-        self.mesh2.rotate_x(self.rot_speed[0])
-        self.mesh2.rotate_y(self.rot_speed[1])
-        self.mesh2.rotate_z(self.rot_speed[2])
+        self.mesh2.rotate_x(self.rot_speed2[0])
+        self.mesh2.rotate_y(self.rot_speed2[1])
+        self.mesh2.rotate_z(self.rot_speed2[2])
 
         self.renderer.render(self.scene, self.camera)
         self.rig.update(self.input, self.delta_time)
